@@ -1,0 +1,22 @@
+{
+    "Main":{
+        "version":[1,0,0],
+        "stat":"beta"
+    },
+    "Window":{
+        "version":[1,0,0],
+        "stat":"beta"
+    },
+    "Filter":{
+        "version":[1,0,0],
+        "stat":"beta"
+    },
+    "Math":{
+        "version":[1,0,0],
+        "stat":"beta"
+    },
+    "AI":{
+        "version":[1,0,0],
+        "stat":"beta"
+    }
+}
