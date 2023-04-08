@@ -79,3 +79,20 @@ class Filter:
                     self.Pixels[(X+PositionToBlit[0],Y+PositionToBlit[1])]=FilterToBlit.Pixels[X,Y]
                 except:
                     pass
+    def Gray(self):
+        for X in range(self.Size[0]):
+            for Y in range(self.Size[1]):
+                Color=self.Pixels[X,Y]
+                self.Pixels[(X,Y)]=(((Color[0]+Color[1]+Color[2])/3,)*3).__add__((255,))
+    def GetArray1D(self,Alpha=False):
+        Result=np.array([])
+        for X in range(self.Size[0]):
+            for Y in range(self.Size[1]):
+                Color=self.Pixels[X,Y]
+                if not Alpha:
+                    Color=Color[:-1]
+                Result=np.append(Color,Result)
+        return Result
+    def Save(self,FileName):
+        ImageToSave=FilterToPILImage(self)
+        ImageToSave.save(FileName)
