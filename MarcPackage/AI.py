@@ -139,7 +139,7 @@ class Network:
         for Loop in range(Epochs):
             Err=0
             for Sample in range(Samples):
-                Output=InputTrain[Sample]
+                Output=OutputTrain[Sample]
                 for LoopLayer in self.Layers:
                     Output=LoopLayer.ForwardPropagation(Output)
                 Err+=self.Loss(OutputTrain[Sample],Output)
