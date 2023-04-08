@@ -18,5 +18,9 @@
     "AI":{
         "version":[1,0,0],
         "stat":"beta"
+    },
+    "Utils":{
+        "version":[1,0,0],
+        "stat":"beta"
     }
 }
