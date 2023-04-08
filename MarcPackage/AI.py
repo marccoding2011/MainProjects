@@ -84,7 +84,7 @@ class ConvLayer(Layer):
     def ForwardPropagation(self,Input):
         self.Input=Input
         self.Output=np.zeros(self.OutputShape)
-        for LoopLayerDepth in range(self.layer_depth):
+        for LoopLayerDepth in range(self.LayerDepth):
             for LoopInputDepth in range(self.InputDepth):
                 self.Output[:,:,LoopLayerDepth]+=signal.correlate2d(self.Input[:,:,LoopInputDepth],self.Weights[:,:,LoopInputDepth,LoopLayerDepth],'valid')+self.Bias[LoopLayerDepth]
         return self.Output
@@ -107,6 +107,10 @@ class FlattenLayer(Layer):
         return self.Output
     def BackwardPropagation(self,OutputError,LearningRate):
         return OutputError.reshape(self.Input.shape)
+def Tanh(Number):
+    return np.tanh(Number)
+def TanhPrime(Number):
+    return 1-np.tanh(Number)**2
 def Mse(Result,Desired):
     return np.mean(np.power(Result-Desired, 2))
 def MsePrime(Result,Desired):
@@ -121,13 +125,13 @@ class Network:
     def Use(self,Loss,LossPrime):
         self.Loss=Loss
         self.LossPrime=LossPrime
-    def Predict(self, input_data):
-        Samples=len(input_data)
+    def Predict(self,InputData):
+        Samples=len(InputData)
         Result=[]
         for Loop in range(Samples):
-            output = input_data[Loop]
-            for layer in self.layers:
-                output = layer.forward_propagation(output)
+            Output = InputData[Loop]
+            for LoopLayer in self.Layers:
+                output = LoopLayer.ForwardPropagation(Output)
             Result.append(output)
         return Result
     def Fit(self,InputTrain,OutputTrain,Epochs,LearningRate):
@@ -140,6 +144,6 @@ class Network:
                     Output=LoopLayer.ForwardPropagation(Output)
                 Err+=self.Loss(OutputTrain[Sample],Output)
                 Error=self.LossPrime(OutputTrain[Sample],Output)
-                for LoopLayer in reversed(self.layers):
+                for LoopLayer in reversed(self.Layers):
                     Error=LoopLayer.BackwardPropagation(Error,LearningRate)
             Err/=Samples
