@@ -92,8 +92,8 @@ class ConvLayer(Layer):
         InError=np.zeros(self.InputShape)
         dWeights=np.zeros((self.KernelShape[0],self.KernelShape[1],self.InputDepth,self.LayerDepth))
         dBias=np.zeros(self.LayerDepth)
-        for LoopLayerDepth in range(self.layer_depth):
-            for LoopInputDepth in range(self.input_depth):
+        for LoopLayerDepth in range(self.LayerDepth):
+            for LoopInputDepth in range(self.InputDepth):
                 InError[:,:,LoopInputDepth]+=signal.convolve2d(OutputError[:,:,LoopLayerDepth],self.Weights[:,:,LoopInputDepth,LoopLayerDepth],'full')
                 dWeights[:,:,LoopInputDepth,LoopLayerDepth]=signal.correlate2d(self.input[:,:,LoopInputDepth],OutputError[:,:,LoopLayerDepth],'valid')
             dBias[LoopLayerDepth]=self.LayerDepth*np.sum(OutputError[:,:,LoopLayerDepth])
