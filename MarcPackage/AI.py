@@ -100,6 +100,35 @@ class ConvLayer(Layer):
         self.Weights-=LearningRate*dWeights
         self.Bias-=LearningRate*dBias
         return InError
+class ConvTransposeLayer(Layer):
+    def __init__(self,OutputShape,KernelShape,LayerDepth):
+        self.OutputShape=OutputShape
+        self.OutputDepth=OutputShape[2]
+        self.KernelShape=KernelShape
+        self.LayerDepth=LayerDepth
+        self.InputShape=(OutputShape[0]-KernelShape[0]+1,OutputShape[1]-KernelShape[1]+1,LayerDepth)
+        self.Weights=np.random.rand(KernelShape[0],KernelShape[1],self.OutputDepth,self.LayerDepth)-0.5
+        self.Bias=np.random.rand(LayerDepth)-0.5
+    def ForwardPropagation(self,Input):
+        self.Input=Input
+        self.Output=np.zeros(self.OutputShape)
+        for LoopLayerDepth in range(self.LayerDepth):
+            for LoopOutputDepth in range(self.OutputDepth):
+                self.Output[:,:,LoopOutputDepth]+=signal.convolve2d(self.Input[:,:,LoopOutputDepth],self.Weights[::-1,::-1,LoopOutputDepth,LoopLayerDepth],'full')
+            self.Output[:,:,LoopLayerDepth]+=self.Bias[LoopLayerDepth]
+        return self.Output
+    def BackwardPropagation(self,OutputError,LearningRate):
+        InError=np.zeros(self.InputShape)
+        dWeights=np.zeros((self.KernelShape[0],self.KernelShape[1],self.OutputDepth,self.LayerDepth))
+        dBias=np.zeros(self.LayerDepth)
+        for LoopLayerDepth in range(self.LayerDepth):
+            for LoopOutputDepth in range(self.OutputDepth):
+                InError[:,:,LoopOutputDepth]+=signal.correlate2d(OutputError[:,:,LoopLayerDepth],self.Weights[::-1,::-1,LoopOutputDepth,LoopLayerDepth],'valid')
+                dWeights[::-1,::-1,LoopOutputDepth,LoopLayerDepth]=signal.convolve2d(self.Input[:,:,LoopOutputDepth],OutputError[:,:,LoopLayerDepth],'valid')
+            dBias[LoopLayerDepth]=np.sum(OutputError[:,:,LoopLayerDepth])
+        self.Weights-=LearningRate*dWeights
+        self.Bias-=LearningRate*dBias
+        return InError
 class FlattenLayer(Layer):
     def ForwardPropagation(self,InputData):
         self.Input=InputData
