@@ -42,28 +42,25 @@ class QTable():
             QPos=self.Play(QPos,QPath)
 class Layer:
     def __init__(self):
-        self.Input = None
-        self.Output = None
+        self.Input=None
+        self.Output=None
     def ForwardPropagation(self,Input):
         raise NotImplementedError
     def BackwardPropagation(self,OutputError,LearningRate):
         raise NotImplementedError
 class FCLayer(Layer):
     def __init__(self,InputSize,OutputSize):
-        self.Weights = np.random.rand(InputSize,OutputSize)-0.5
-        self.Bias = np.random.rand(1,OutputSize)-0.5
+        self.Weights=np.random.rand(InputSize,OutputSize)-0.5
+        self.Bias=np.random.rand(1,OutputSize)-0.5
     def ForwardPropagation(self,InputData):
         self.Input=InputData
-
         self.Output=np.dot(self.Input,self.Weights)+self.Bias
         return self.Output
-    
-
     def BackwardPropagation(self, OutputError, LearningRate):
-        InputError = np.dot(OutputError, self.Weights.T)
-        WeightsError = np.dot(self.Input.T, OutputError)
-        self.Weights -= LearningRate * WeightsError
-        self.Bias -= LearningRate * OutputError
+        InputError=np.dot(OutputError, self.Weights.T)
+        WeightsError=np.dot(self.Input.T, OutputError)
+        self.Weights-=LearningRate*WeightsError
+        self.Bias-=LearningRate*OutputError
         return InputError
 class ActivationLayer(Layer):
     def __init__(self,Activation,ActivationPrime):
