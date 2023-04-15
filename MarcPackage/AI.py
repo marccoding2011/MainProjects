@@ -53,9 +53,12 @@ class FCLayer(Layer):
         self.Weights = np.random.rand(InputSize,OutputSize)-0.5
         self.Bias = np.random.rand(1,OutputSize)-0.5
     def ForwardPropagation(self,InputData):
-        self.Input = InputData
-        self.Output = np.dot(self.Input,self.Weights)+self.Bias
+        self.Input=InputData
+
+        self.Output=np.dot(self.Input,self.Weights)+self.Bias
         return self.Output
+    
+
     def BackwardPropagation(self, OutputError, LearningRate):
         InputError = np.dot(OutputError, self.Weights.T)
         WeightsError = np.dot(self.Input.T, OutputError)
@@ -158,17 +161,17 @@ class Network:
         Samples=len(InputData)
         Result=[]
         for Loop in range(Samples):
-            Output = InputData[Loop]
+            Output=InputData[Loop]
             for LoopLayer in self.Layers:
-                output = LoopLayer.ForwardPropagation(Output)
-            Result.append(output)
+                Output=LoopLayer.ForwardPropagation(Output)
+            Result.append(Output)
         return Result
     def Fit(self,InputTrain,OutputTrain,Epochs,LearningRate):
         Samples=len(InputTrain)
         for Loop in range(Epochs):
             Err=0
             for Sample in range(Samples):
-                Output=OutputTrain[Sample]
+                Output=InputTrain[Sample]
                 for LoopLayer in self.Layers:
                     Output=LoopLayer.ForwardPropagation(Output)
                 Err+=self.Loss(OutputTrain[Sample],Output)
