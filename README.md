@@ -1,10 +1,3 @@
-# MainProjects
-Autor: 
-  Marc Lormelle marc2011@pm.me
-Thanks:
-  Arthur;
-  My father;
-  My mother;
-  My brother;
-  The LFA-DFG of Buc;
-  And my friends.
+#MainProjects
+Author: Marccoding2011 as Boubou78000
+Thanks: Family and Friends
