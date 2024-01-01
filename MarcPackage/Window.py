@@ -1,6 +1,6 @@
 from pygame import *
-import Math as mth
-import Filter as fltr
+import MassiveBoubou.Math as mth
+import MassiveBoubou.Filter as fltr
 init()
 class Window:
     def __init__(self,Size,BackgroundColor=(255,255,255),Resizable=False,Tick=None,Running=None,Checking=None,Items=[],Initialisation=None,Exit=None,Bonus=False):
@@ -84,7 +84,7 @@ class Sprite:
         self.Surface=fltr.FilterToSurface(self.Filter)
         self.Size=self.Filter.Size
     def Move(self,Move:tuple,Radians=0):
-        Move=mth.TurnMove()
+        Move=mth.TurnMove(Move,Radians)
         self.Position=(self.Position[0]+Move[0],self.Position[1]+Move[1])
     def Copy(self):
         Result=Sprite(self.Filter.Copy(),self.Position,self.ButtonFunction,self.Click,self.ClickFunctionUp,self.ClickFunctionDown,self.Type)
@@ -127,7 +127,7 @@ class Text:
         self.Surface=fltr.FilterToSurface(self.Filter)
         self.Size=self.Filter.Size
     def Move(self,Move:tuple,Radians=0):
-        Move=mth.TurnMove()
+        Move=mth.TurnMove(Move,Radians)
         self.Position=(self.Position[0]+Move[0],self.Position[1]+Move[1])
     def Copy(self):
         Result=Text(self.Text,self.FontSize,self.Position,self.Color,self.FontName,self.Bold,self.Italic,self.ButtonFunction,self.Click,self.ClickFunctionUp,self.ClickFunctionDown,self.Type)
