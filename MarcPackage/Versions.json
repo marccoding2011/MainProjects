@@ -4,11 +4,11 @@
         "stat":"beta"
     },
     "Window":{
-        "version":[1,0,0],
+        "version":[1,0,1],
         "stat":"beta"
     },
     "Filter":{
-        "version":[1,0,0],
+        "version":[1,0,1],
         "stat":"beta"
     },
     "Math":{
