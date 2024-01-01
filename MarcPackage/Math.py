@@ -4,23 +4,18 @@ def DegresToRadians(Degres):
 radian=1/radians(1)
 def TurnMove(Move,Radians):
     return (cos(Radians)*Move[0]-sin(Radians)*Move[1],sin(Radians)*Move[0]+cos(Radians)*Move[1])
-def Primes(Limit):
-    List=[True]*Limit
-    List[0]=False
-    List[1]=False
-    for i in range(2,int(sqrt(Limit))+1):
-        if List[i]:
-            t=2
-            while t*i<Limit:
-                List[t*i]=False
-                t+=1
-    Result=[]
-    t=0
-    for i in List:
-        if i:
-            Result.append(t)
-        t+=1
-    return Result
+def Primes(N):
+    List=set()
+    ListReturn=set()
+    for i in range(2,N+1):
+        if not i in List:
+            ListReturn.add(i)
+            k=0
+            while k<=N:
+                k+=i
+                List.add(k)
+    Running=False
+    return ListReturn
 def IsPrime(Number):
     if Number<2:
         return False
