@@ -1,5 +1,6 @@
 from pygame import Surface,SRCALPHA
 import PIL.Image
+import numpy as np
 def Load(File):
     Image=PIL.Image.open(File)
     Result=Filter((0,0),None)
@@ -93,6 +94,6 @@ class Filter:
                     Color=Color[:-1]
                 Result=np.append(Color,Result)
         return Result
-    def Save(self,FileName):
+    """def Save(self,FileName):
         ImageToSave=FilterToPILImage(self)
-        ImageToSave.save(FileName)
+        ImageToSave.save(FileName)"""
